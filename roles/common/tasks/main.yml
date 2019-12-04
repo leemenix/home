@@ -1,0 +1,5 @@
+---
+# roles/common/tasks/main.yml
+- name: Clone my dotfiles
+  debug:
+    msg: "TBD"
