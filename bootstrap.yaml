@@ -1,0 +1,10 @@
+---
+- name: Bootstrap workstation
+  hosts: localhost
+  become: yes
+  tasks:
+    - include_role:
+        name: bootstrap
+    - include_role:
+        name: common
+

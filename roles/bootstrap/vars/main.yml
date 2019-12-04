@@ -1,0 +1,10 @@
+---
+
+  packages:
+    - "vim"
+    - "htop"
+    - "curl"
+    - "wget"
+    - "python3"
+    - "python3-pip"
+    - "virtualenv"
