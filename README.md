@@ -1,6 +1,6 @@
-#fully automate your workstation:
+# fully automate your workstation
 
-#Versions/Updates:
+# Versions/Updates:
 
 ## 04.12.2019
 - Basic bash script with simple menu
