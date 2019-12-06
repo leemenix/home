@@ -1,0 +1,12 @@
+---
+- hosts: localhost
+  become: true
+  vars:
+    default_docker_user: mc
+    user_id: 1000
+    user_group: 1000
+    user_dir: "/home/{{ default_docker_user }}"
+
+  tasks:
+    - include_role:
+        name: prepare_env
