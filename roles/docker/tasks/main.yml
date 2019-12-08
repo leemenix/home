@@ -1,0 +1,80 @@
+- name: Add Docker GPG apt key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: Add Docker repo
+  apt_repository:
+    repo: deb https://download.docker.com/linux/ubuntu bionic stable
+    state: present 
+
+- name: Update and install docker-ce
+  apt:
+    update_cache: yes
+    name: docker-ce
+    state: latest
+
+- name: Install Docker module for python
+  pip:
+    name: docker
+
+- name: Install docker-compose cli
+  apt:
+    name: docker-compose
+    state: present
+    update_cache: yes
+
+# - name: Pull default Docker image
+#   docker_image:
+#     name: "{{ default_container_image }}"
+#     pull: yes
+
+- name: add docker group
+  user:
+    name: docker
+    state: present
+
+- name: enable default user for operate with docker
+  user:
+     name: "{{ docker_user }}"
+     groups: docker
+
+- name: default docker directory for mount
+  file:
+    path: "{{ user_dir }}/docker_workspace"
+    state: directory
+    owner: "{{ docker_user }}"
+    group: docker
+    mode: '0775'
+# - debug:
+#     msg: "User dir is {{ user_dir }}"    
+
+- name: update local server envrionment vars; add USER_DIR
+  lineinfile:
+    path: /etc/environment
+    line: USER_DIR="{{ user_dir }}"
+
+- name: update PUID
+  lineinfile:
+    path: /etc/environment
+    line: PUID="{{ user_id }}"
+
+- name: update PGID
+  lineinfile:
+    path: /etc/environment
+    line: PGID="{{ user_group }}"
+
+# - name: update local server envrionment vars; add TZ
+#   lineinfile:
+#     path: /etc/environment
+#     line: TZ="{{ timezone }}"
+
+# - name: update localserver envirionment vars; add mysql root pass
+#   lineinfile:
+#     path: /etc/environment
+#     line: MYSQL_ROOT_PASSWORD="{{ mysql_root_password }}"
+
+- name: restart docker service
+  service:
+    name: docker
+    state: restarted

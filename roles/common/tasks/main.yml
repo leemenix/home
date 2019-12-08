@@ -3,3 +3,5 @@
 - name: Clone my dotfiles
   debug:
     msg: "TBD"
+# - debug: 
+#     msg: "{{ docker_user }}"

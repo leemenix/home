@@ -2,9 +2,16 @@
 - name: Bootstrap workstation
   hosts: localhost
   become: yes
+  vars:
+    docker_user: "{{ lookup('env','USER') }}"
+    user_dir: "{{ lookup('env','HOME') }}"
+    user_id: "1000"
+    user_group: "1000"
+
   tasks:
     - include_role:
         name: bootstrap
     - include_role:
         name: common
-
+    - include_role:
+        name: docker
